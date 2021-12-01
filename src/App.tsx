@@ -1,9 +1,32 @@
-import './App.css';
+import { Row, Col, Card } from 'antd';
+import { WeatherInfo } from './components/WeatherInfo'
+import { WeatherCard } from './components/WeatherCard'
 
 function App() {
   return (
     <>
-      App
+      <Row justify={'center'}>
+        <Col span={12} >
+          <Card title={'Weather in your city'} >
+            < WeatherInfo />
+          </Card>
+        </Col>
+      </Row>
+      <Row justify={'center'} gutter={[16,0]}>
+        <Col>
+          <WeatherCard />
+        </Col>
+        <Col>
+          <WeatherCard />
+        </Col>        
+        <Col>
+          <WeatherCard />
+        </Col>        
+        <Col>
+          <WeatherCard />
+        </Col>
+      </Row>
+      
     </>
   );
 }
