@@ -2,8 +2,8 @@
 
 body {
     min-width: fit-content;
-    background: rgb(5,114,166);
-    background: linear-gradient(184deg, rgba(5,114,166,1) 0%, rgba(20,20,215,1) 25%, rgba(0,212,255,1) 100%);
+    background: rgb(126,126,246);
+    background: linear-gradient(184deg, rgba(126,126,246,1) 39%, rgba(40,40,227,1) 65%, rgba(0,212,255,1) 98%);
     font-family: 'Roboto', sans-serif;
 }
 
