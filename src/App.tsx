@@ -1,7 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Row, Col, Card } from 'antd';
 import { WeatherInfo } from './components/WeatherInfo'
-// import { WeatherCard } from './components/WeatherCard'
-import { useEffect, useState } from 'react';
 import Axios from 'utils/Axios';
 import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI';
 
@@ -15,9 +14,11 @@ function App() {
       if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
               
-              Axios.request({ url: `http://${process.env.REACT_APP_WEATHER_API_URL}?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, method: 'GET' })
+              Axios.request({ url: `
+                http://${process.env.REACT_APP_WEATHER_API_URL}?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, 
+              method: 'GET' })
               .then((response) => {
-
+                  console.log(response.data)
                   changeMainCityInformation({ ...response.data })
 
               }).catch((reason) => {
@@ -32,36 +33,28 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div>
       <Row justify={'center'}>
-        <Col span={12} >
-          <Card title={'Weather in your city'} >
+        <Col span={24} >
+          <Card style={{ backgroundColor: 'transparent' }} >
             { mainCityInformation && 
               (
                 <>
-                  < WeatherInfo  cityName={mainCityInformation.name} weather={mainCityInformation.weather} main={mainCityInformation.main} wind={mainCityInformation.wind} timezone={mainCityInformation.timezone} dateTime={mainCityInformation.dt}  />
+                  < WeatherInfo  cityName={mainCityInformation.name} countryName={mainCityInformation.sys.country} weather={mainCityInformation.weather} main={mainCityInformation.main} wind={mainCityInformation.wind} timezone={mainCityInformation.timezone} dateTime={mainCityInformation.dt}  />
                 </>
               )
+             }
+             {
+               !mainCityInformation && (
+                  <>
+                    
+                  </>
+               )
              }
           </Card>
         </Col>
       </Row>
-      {/* <Row justify={'center'} gutter={[16,0]}>
-        <Col>
-          <WeatherCard />
-        </Col>
-        <Col>
-          <WeatherCard />
-        </Col>        
-        <Col>
-          <WeatherCard />
-        </Col>        
-        <Col>
-          <WeatherCard />
-        </Col>
-      </Row>
-       */}
-    </>
+    </div>
   );
 }
 

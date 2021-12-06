@@ -1,1 +1,21 @@
 @import '~antd/dist/antd.css';
+
+body {
+    min-width: fit-content;
+    background: rgb(5,114,166);
+    background: linear-gradient(184deg, rgba(5,114,166,1) 0%, rgba(20,20,215,1) 25%, rgba(0,212,255,1) 100%);
+    font-family: 'Roboto', sans-serif;
+}
+
+.ant-card {
+    margin: 13%;
+    color: #ffffff;
+}
+
+.ant-card-bordered {
+    border: none;
+}
+
+.ant-card-head {
+    border-bottom: none;
+}
