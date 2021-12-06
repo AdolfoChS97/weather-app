@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card } from 'antd';
-import { WeatherInfo } from './components/WeatherInfo'
+import { Row, Col, Card, Input } from 'antd';
+import { WeatherInfo } from 'components/WeatherInfo'
+import { GithubProfile } from 'components/Github'
 import Axios from 'utils/Axios';
 import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI';
+
+const { Search } = Input
 
 function App() {
   
   const [mainCityInformation, changeMainCityInformation] = useState<OpenWeatherAPI.Response.Place>()
-  // const [listCityInformation, changeListCityInformation] = useState([])
 
   useEffect(() => {
 
@@ -34,6 +36,12 @@ function App() {
 
   return (
     <div>
+      <Row justify={'center'} style={{ marginTop: 100 }} >
+        <Col span={12}>
+          <Search placeholder={'Search your city ...'} loading={true}>
+          </Search>
+        </Col>
+      </Row>
       <Row justify={'center'}>
         <Col span={24} >
           <Card style={{ backgroundColor: 'transparent' }} >
@@ -54,6 +62,9 @@ function App() {
           </Card>
         </Col>
       </Row>
+      {/* <Row justify={'start'}>
+          <GithubProfile />
+      </Row> */}
     </div>
   );
 }

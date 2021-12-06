@@ -1,4 +1,7 @@
 import { Row, Col } from 'antd'
+import {
+    EnvironmentOutlined
+  } from '@ant-design/icons';
 import { WeatherApp } from 'app/@types/weatherApp';
 import Converter from "utils/Converter";
 
@@ -12,7 +15,9 @@ export const WeatherInfo = (props: WeatherApp.Info) => {
         <> 
             <Row justify={'center'}>
                 <Col>
-                    <span style={{ fontSize: 23 }}>
+                    <EnvironmentOutlined style={{ fontSize: 25, fontWeight: 'bolder' }} />
+                    {'  '}
+                    <span style={{ fontSize: 25 }}>
                         <b>{cityName}</b>, <b>{countryName}</b>
                     </span>
                 </Col>

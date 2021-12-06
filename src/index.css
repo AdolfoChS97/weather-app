@@ -12,10 +12,19 @@ body {
     color: #ffffff;
 }
 
+.ant-input {
+    background-color: transparent;
+    color: #ffffff;
+}
+
 .ant-card-bordered {
     border: none;
 }
 
 .ant-card-head {
     border-bottom: none;
+}
+
+.ant-col-24 {
+    max-width: 40%;
 }
