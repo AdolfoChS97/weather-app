@@ -1,6 +1,6 @@
 import { Row, Col, Card } from 'antd';
 import { WeatherInfo } from './components/WeatherInfo'
-import { WeatherCard } from './components/WeatherCard'
+// import { WeatherCard } from './components/WeatherCard'
 import { useEffect, useState } from 'react';
 import Axios from 'utils/Axios';
 import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI';
@@ -8,7 +8,7 @@ import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI';
 function App() {
   
   const [mainCityInformation, changeMainCityInformation] = useState<OpenWeatherAPI.Response.Place>()
-  const [listCityInformation, changeListCityInformation] = useState([])
+  // const [listCityInformation, changeListCityInformation] = useState([])
 
   useEffect(() => {
 
@@ -19,10 +19,6 @@ function App() {
               .then((response) => {
 
                   changeMainCityInformation({ ...response.data })
-                  // changeListCityInformation(leftPlaces)
-
-                  // cityName string ,  weather Array, main object, wind,  timezone, dateTime
-
 
               }).catch((reason) => {
                 console.log(reason);
@@ -35,9 +31,6 @@ function App() {
 
   }, [])
 
-  console.log(mainCityInformation);
-
-
   return (
     <>
       <Row justify={'center'}>
@@ -49,14 +42,11 @@ function App() {
                   < WeatherInfo  cityName={mainCityInformation.name} weather={mainCityInformation.weather} main={mainCityInformation.main} wind={mainCityInformation.wind} timezone={mainCityInformation.timezone} dateTime={mainCityInformation.dt}  />
                 </>
               )
-              // <>
-              //  
-              // </>
              }
           </Card>
         </Col>
       </Row>
-      <Row justify={'center'} gutter={[16,0]}>
+      {/* <Row justify={'center'} gutter={[16,0]}>
         <Col>
           <WeatherCard />
         </Col>
@@ -70,7 +60,7 @@ function App() {
           <WeatherCard />
         </Col>
       </Row>
-      
+       */}
     </>
   );
 }

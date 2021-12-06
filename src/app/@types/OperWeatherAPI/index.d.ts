@@ -2,7 +2,7 @@ namespace OpenWeatherAPI {
     
     export namespace Response {
         
-        export interface CityByName {
+        export interface Place {
             coord: {
                 lon: number
                 lat: number        
@@ -21,6 +21,7 @@ namespace OpenWeatherAPI {
             wind: {
                 speed: number
                 deg: number
+                gust: number
             },
             clouds: {
                 all: number
