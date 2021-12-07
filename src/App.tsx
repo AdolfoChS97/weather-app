@@ -49,7 +49,7 @@ function App() {
   return (
     <div>
       <Row justify={'center'} style={{ marginTop: 100 }} >
-        <Col span={8}>
+        <Col span={16}>
           <Search placeholder={'Search your city ...'} onSearch={searchCity} loading={loadingSeachInput} >
           </Search>
         </Col>
