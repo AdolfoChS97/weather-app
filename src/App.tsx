@@ -10,7 +10,7 @@ const { Search } = Input
 function App() {
   
   const [mainCityInformation, changeMainCityInformation] = useState<OpenWeatherAPI.Response.Place>()
-
+  const [loadingSeachInput, changeLoadingSearchInput] = useState(false)
   useEffect(() => {
 
       if(navigator.geolocation) {
@@ -20,9 +20,7 @@ function App() {
                 http://${process.env.REACT_APP_WEATHER_API_URL}?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, 
               method: 'GET' })
               .then((response) => {
-                  console.log(response.data)
                   changeMainCityInformation({ ...response.data })
-
               }).catch((reason) => {
                 console.log(reason);
               })
@@ -34,11 +32,25 @@ function App() {
 
   }, [])
 
+  const searchCity = (city: string) => {
+    changeLoadingSearchInput(true)
+    Axios.request({ url: `http://${process.env.REACT_APP_WEATHER_API_URL}?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, method: 'GET' })
+      .then((response) => {
+        changeMainCityInformation({ ...response.data })
+      })
+      .catch((reason) => {
+        console.log(reason);
+      })
+      .finally(() => {
+        changeLoadingSearchInput(false)
+      })
+  }
+
   return (
     <div>
       <Row justify={'center'} style={{ marginTop: 100 }} >
-        <Col span={12}>
-          <Search placeholder={'Search your city ...'} loading={true}>
+        <Col span={8}>
+          <Search placeholder={'Search your city ...'} onSearch={searchCity} loading={loadingSeachInput} >
           </Search>
         </Col>
       </Row>
