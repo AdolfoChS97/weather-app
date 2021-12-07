@@ -17,7 +17,7 @@ function App() {
           navigator.geolocation.getCurrentPosition((position) => {
               
               Axios.request({ url: `
-                http://${process.env.REACT_APP_WEATHER_API_URL}?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, 
+                https://${process.env.REACT_APP_WEATHER_API_URL}?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, 
               method: 'GET' })
               .then((response) => {
                   changeMainCityInformation({ ...response.data })
