@@ -2,7 +2,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-html {
+html {   
     height: 100%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -10,9 +10,9 @@ html {
     background-size: cover;
     background: "#70bg32";
     background-repeat:no-repeat;
-    background: -webkit-linear-gradient(rgb(19, 19, 253) 85%, rgba(0,212,255,1) 98%);
-    background: -moz-linear-gradient(rgba(40,40,227,1) 85%, rgba(0,212,255,1) 98%);
-    background: -ms-linear-gradient(rgba(40,40,227,1) 85%, rgba(0,212,255,1) 98%);
-    background: -o-linear-gradient(rgba(40,40,227,1) 85%, rgba(0,212,255,1) 98%);
-    background: linear-gradient(rgba(40,40,227,1) 85%, rgba(0,212,255,1) 98%);
+    background: -webkit-linear-gradient(360deg, rgba(1,92,111,1) 0%, rgba(5,163,195,1) 65%, rgba(0,212,255,1) 98%);
+    background: -moz-linear-gradient(360deg, rgba(1,92,111,1) 0%, rgba(5,163,195,1) 65%, rgba(0,212,255,1) 98%);
+    background: -ms-linear-gradient(360deg, rgba(1,92,111,1) 0%, rgba(5,163,195,1) 65%, rgba(0,212,255,1) 98%);
+    background: -o-linear-gradient(360deg, rgba(1,92,111,1) 0%, rgba(5,163,195,1) 65%, rgba(0,212,255,1) 98%);
+    background: linear-gradient(360deg, rgba(1,92,111,1) 0%, rgba(5,163,195,1) 65%, rgba(0,212,255,1) 98%);
 }
