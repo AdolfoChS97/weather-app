@@ -1,82 +1,68 @@
-import { useEffect, useState } from 'react';
-import { Row, Col, Card, Input } from 'antd';
+import { useEffect, useState } from 'react'
 import { WeatherInfo } from 'components/WeatherInfo'
-import { GithubProfile } from 'components/Github'
-import Axios from 'utils/Axios';
-import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI';
-
-const { Search } = Input
+import OpenWeatherRequest from 'services/OpenWeatherRequest'
+import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI'
+import { TextField, Grid, CircularProgress } from '@mui/material'
 
 function App() {
   
+  const requester = new OpenWeatherRequest(process.env.REACT_APP_WEATHER_API_PK as string)  
+  const geo = navigator.geolocation
   const [mainCityInformation, changeMainCityInformation] = useState<OpenWeatherAPI.Response.Place>()
-  const [loadingSeachInput, changeLoadingSearchInput] = useState(false)
+  
   useEffect(() => {
+      if(geo) {
+        geo.getCurrentPosition((position) => {
+          requester.getCityByCoords(position.coords.latitude, position.coords.longitude)
+            .then((response) => {
+              changeMainCityInformation({ ...response })
+            })
+            .catch((reason) => changeMainCityInformation(undefined))  
 
-      if(navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-              
-              Axios.request({ url: `
-                ${process.env.REACT_APP_WEATHER_PROTOCOL}${process.env.REACT_APP_WEATHER_API_URL}?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, 
-              method: 'GET' })
-              .then((response) => {
-                  changeMainCityInformation({ ...response.data })
-              }).catch((reason) => {
-                console.log(reason);
-              })
-          
-          }, (error) => {
-            console.log(error);
-          })
+        })
       }
 
   }, [])
 
+
   const searchCity = (city: string) => {
-    changeLoadingSearchInput(true)
-    Axios.request({ url: `${process.env.REACT_APP_WEATHER_PROTOCOL}${process.env.REACT_APP_WEATHER_API_URL}?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_PK}`, method: 'GET' })
-      .then((response) => {
-        changeMainCityInformation({ ...response.data })
-      })
-      .catch((reason) => {
-        console.log(reason);
-      })
-      .finally(() => {
-        changeLoadingSearchInput(false)
-      })
+    requester.getCityByName(city)
+      .then((response) => changeMainCityInformation({ ...response }))
+      .catch((reason) => changeMainCityInformation(undefined))
+    if(mainCityInformation) requester.overwriteCity(mainCityInformation.name)
   }
 
   return (
     <div>
-      <Row justify={'center'} style={{ marginTop: 100 }} >
-        <Col span={16}>
-          <Search placeholder={'Search your city ...'} onSearch={searchCity} loading={loadingSeachInput} >
-          </Search>
-        </Col>
-      </Row>
-      <Row justify={'center'}>
-        <Col span={24} >
-          <Card style={{ backgroundColor: 'transparent' }} >
-            { mainCityInformation && 
-              (
-                <>
-                  < WeatherInfo  cityName={mainCityInformation.name} countryName={mainCityInformation.sys.country} weather={mainCityInformation.weather} main={mainCityInformation.main} wind={mainCityInformation.wind} timezone={mainCityInformation.timezone} dateTime={mainCityInformation.dt}  />
-                </>
-              )
-             }
-             {
-               !mainCityInformation && (
-                  <>
-                    
-                  </>
-               )
-             }
-          </Card>
-        </Col>
-      </Row>
-      {/* <Row justify={'start'}>
-          <GithubProfile />
-      </Row> */}
+      { geo && 
+        (
+          <>
+            <Grid container direction="column" alignItems="center" justifyContent="center" style={{ margin: '1.5% 0% 3% 0%' }}>
+              <Grid item xs md lg>
+                <TextField label="Search your city ..." variant={'standard'} focused={true} onChange={(event) => searchCity(event.target.value)}/>
+              </Grid>
+            </Grid>
+          </>
+        ) 
+      }
+      { mainCityInformation && 
+        (
+          <>
+            < WeatherInfo  cityName={mainCityInformation.name} countryName={mainCityInformation.sys.country} weather={mainCityInformation.weather} main={mainCityInformation.main} wind={mainCityInformation.wind} timezone={mainCityInformation.timezone} dateTime={mainCityInformation.dt}  />
+          </>
+        )
+      }
+      { !mainCityInformation && 
+        (
+          <>
+            <Grid container direction="column" alignItems="center" justifyContent="center" style={{ margin: '11.5% 0% 3% 0%' }}>
+              <Grid item xs md lg>
+                <CircularProgress sx={{ color: '#fff' }} />
+              </Grid>
+            </Grid>
+          </>
+        )
+      }
     </div>
   );
 }
