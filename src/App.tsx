@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { WeatherInfo } from 'components/WeatherInfo'
-import OpenWeatherRequest from 'utils/OpenWeatherRequest'
+import OpenWeatherRequest from 'services/OpenWeatherRequest'
 import { OpenWeatherAPI } from 'app/@types/OperWeatherAPI'
 import { TextField, Grid, CircularProgress } from '@mui/material'
 
